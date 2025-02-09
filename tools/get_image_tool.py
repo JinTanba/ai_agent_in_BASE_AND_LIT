@@ -8,7 +8,7 @@ from browser_use.browser.browser import BrowserConfig
 from browser_use.browser.context import BrowserContext
 load_dotenv()
 controller = Controller()
-browser = Browser(config=BrowserConfig(headless=True))
+browser = Browser(config=BrowserConfig(headless=False))
 llm = ChatOpenAI(model="gpt-4o")
 
 @controller.registry.action('Execute js code')

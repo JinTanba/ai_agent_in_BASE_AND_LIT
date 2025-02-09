@@ -1,0 +1,95 @@
+# Midjarny
+
+MidjourneyのAPIを利用して画像を生成するRESTful APIサーバーです。
+
+## 機能
+
+- プロンプトを受け取り、Midjourneyを使用して画像を生成
+- 生成された画像のURLを返却
+- プログレス情報のログ出力
+
+## 技術スタック
+
+- TypeScript
+- Express.js
+- Midjourney API
+- Supabase
+
+## セットアップ
+
+### 前提条件
+
+- Node.js
+- npm
+- Midjourneyのアカウントとアクセス権限
+
+### インストール
+
+```bash
+npm install
+```
+
+### 環境変数の設定
+
+`.env`ファイルをプロジェクトのルートに作成し、以下の環境変数を設定してください:
+
+```env
+SERVER_ID=your_server_id
+CHANNEL_ID=your_channel_id
+SALAI_TOKEN=your_salai_token
+PORT=3000  # オプション、デフォルトは3000
+```
+
+## 使用方法
+
+### 開発サーバーの起動
+
+```bash
+npm run dev
+```
+
+### ビルドと本番実行
+
+```bash
+npm run build
+npm start
+```
+
+### 画像生成スクリプトの単独実行
+
+```bash
+npm run generate
+```
+
+## API エンドポイント
+
+### POST /generate
+
+画像を生成するエンドポイントです。
+
+#### リクエスト形式
+
+```json
+{
+  "prompt": "画像生成のプロンプト"
+}
+```
+
+#### レスポンス形式
+
+成功時:
+```json
+{
+  "success": true,
+  "img_url": "生成された画像のURL"
+}
+```
+
+エラー時:
+```json
+{
+  "error": "エラーメッセージ",
+  "details": "詳細なエラー情報(存在する場合)"
+}
+```
+

@@ -48,11 +48,11 @@ Here are the specific steps:
 """
 
 check_mention_task = lambda: f"""
-Your task is to check the mention to me and store tweet link.
+Your task is to check the mention.
 
 Here are the specific steps:
 1. Go to the https://x.com/notifications/mentions
-2. collect 10~5 latest mention tweet link to me.
+2. collect 1 latest mention tweet content and name to me.
 """
 
 async def run(tweet_content: str="", retry_count: int = 0):
@@ -64,7 +64,8 @@ async def run(tweet_content: str="", retry_count: int = 0):
         print("Maximum retry attempts reached")
         return False
 
-    browser = Browser()
+    browser = Browser(config=BrowserConfig(headless=False))
+    print('=============', tweet_content)
     res = False
     async with await browser.new_context() as context:
 
@@ -107,10 +108,10 @@ async def run(tweet_content: str="", retry_count: int = 0):
                 print("Mention checked successfully")
                 extracted = mention_history.extracted_content()
                 print(extracted)
-                linksjson = extract_links(json.dumps(extracted))
+                linksjson = extracted[0]
                 print(linksjson)
                 
-                return True
+                return linksjson
             else:
                 return False
 
@@ -118,6 +119,7 @@ async def run(tweet_content: str="", retry_count: int = 0):
             if tweet_content:
                 res = await post()
             else:
+                print('00000000')
                 res = await get_mention_to_me()
         
     print('=============', res)
@@ -126,9 +128,6 @@ async def run(tweet_content: str="", retry_count: int = 0):
     return res
     
     
-
-
-
 if __name__ == '__main__':
     source_code = Path(__file__).read_text(encoding='utf-8')
     asyncio.run(run(tweet_content=""))
